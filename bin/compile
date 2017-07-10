@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+set -e
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+LP_DIR=`cd $(dirname $0); cd ..; pwd`
+
+cd $BUILD_DIR
+file1="c/extconf.rb"
+if [ -f $file1 ]
+then
+    echo "-----> extconf.rb found"
+else
+    echo "-----> No extconf.rb found. Compilation cannot continue."
+    exit 1;
+fi
+
+cd c
+ruby extconf.rb
+make
+echo "-----> Compilation done"
